@@ -3,6 +3,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import MainView from '@/views/MainView.vue'
 import SettingsView from '@/views/Pages/SettingsView.vue'
 import ProfileView from '@/views/ProfileView.vue'
+import { usePageStore } from '@/stores/page'
 
 
 const routes = [
@@ -58,6 +59,11 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
   document.title = `Duepe Panel | ${to.meta.title}`
+
+  if (typeof to.meta.title === 'string') {
+    usePageStore().setTitle(to.meta.title)
+  }
+
   next()
 })
 

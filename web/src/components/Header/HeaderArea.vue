@@ -42,7 +42,7 @@
         </router-link>
       </div>
       <div class="hidden sm:block">
-        <h2 class="text-xl font-semibold text-black dark:text-white">{{ sideBarStore.selected }}</h2>
+        <h2 class="text-xl font-semibold text-black dark:text-white">{{  usePageStore().title }}</h2>
 
 <!--        <form action="https://formbold.com/s/unique_form_id" method="POST">-->
 <!--          <div class="relative">-->
@@ -105,6 +105,7 @@ import { useSidebarStore } from '@/stores/sidebar'
 import DarkModeSwitcher from './DarkModeSwitcher.vue'
 import DropdownNotification from './DropdownNotification.vue'
 import DropdownUser from './DropdownUser.vue'
+import { usePageStore } from "@/stores/page";
 
 const sideBarStore = useSidebarStore()
 
