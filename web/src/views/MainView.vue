@@ -2,10 +2,8 @@
 import { ref } from 'vue'
 
 import DefaultLayout from '@/layouts/DefaultLayout.vue'
-import CardResources  from "@/components/Monitoring/CardResources.vue";
-import EnvGraph from "@/components/Monitoring/EnvGraph.vue";
-import EnvCycleGraph from "@/components/Monitoring/EnvCycleGraph.vue";
 import ServiceListTable  from "@/components/Tables/ServiceListTable.vue";
+import MonitoringArea from "@/components/Monitoring/MonitoringArea.vue";
 
 
 const mockServices = ref([
@@ -18,15 +16,9 @@ const mockServices = ref([
 
 <template>
   <DefaultLayout>
-    <div class="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6 xl:grid-cols-4 2xl:gap-7.5">
-      <CardResources />
-    </div>
+    <MonitoringArea />
 
     <div class="mt-4 grid grid-cols-12 gap-4 md:mt-6 md:gap-6 2xl:mt-7.5 2xl:gap-7.5">
-      <EnvGraph />
-
-      <EnvCycleGraph />
-
       <div class="col-span-12">
         <ServiceListTable :only-active=true title="Active Services" :items="mockServices"/>
       </div>
