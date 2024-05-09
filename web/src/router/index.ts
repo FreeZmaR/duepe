@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
 import MainView from '@/views/MainView.vue'
-import SettingsView from '@/views/Pages/SettingsView.vue'
+import SettingsView from '@/views/SettingsView.vue'
 import ProfileView from '@/views/ProfileView.vue'
 import { usePageStore } from '@/stores/page'
 
