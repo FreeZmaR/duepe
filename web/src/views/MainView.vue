@@ -1,9 +1,19 @@
 <script setup lang="ts">
-import TableOne from '@/components/Tables/TableOne.vue'
+import { ref } from 'vue'
+
 import DefaultLayout from '@/layouts/DefaultLayout.vue'
 import CardResources  from "@/components/Monitoring/CardResources.vue";
 import EnvGraph from "@/components/Monitoring/EnvGraph.vue";
 import EnvCycleGraph from "@/components/Monitoring/EnvCycleGraph.vue";
+import ServiceListTable  from "@/components/Tables/ServiceListTable.vue";
+
+
+const mockServices = ref([
+  { id: 1, name: 'Core', type: 'Container', status: true, workTime: '2h', actions: { setting: true, run: true, stop: true, delete: true } },
+  { id: 2, name: 'Order', type: 'Container',  status: true, workTime: '2h', actions: { setting: true, run: true, stop: true, delete: true } },
+  { id: 3, name: 'Delivery', type: 'Container', status: false, actions: { setting: true, run: true, stop: true, delete: true } },
+  { id: 4, name: 'Balance', type: 'Local', status: false, actions: { setting: true, run: true, stop: true, delete: true } },
+])
 </script>
 
 <template>
@@ -18,7 +28,7 @@ import EnvCycleGraph from "@/components/Monitoring/EnvCycleGraph.vue";
       <EnvCycleGraph />
 
       <div class="col-span-12">
-        <TableOne />
+        <ServiceListTable :only-active=true title="Active Services" :items="mockServices"/>
       </div>
     </div>
   </DefaultLayout>

@@ -144,7 +144,6 @@ const apexOptions = {
           </span>
           <div class="w-full">
             <p class="font-semibold text-primary">CPU</p>
-            <p class="text-sm font-medium">12.04.2022 - 12.05.2022</p>
           </div>
         </div>
 
@@ -156,7 +155,6 @@ const apexOptions = {
           </span>
           <div class="w-full">
             <p class="font-semibold text-secondary">RAM</p>
-            <p class="text-sm font-medium">12.04.2022 - 12.05.2022</p>
           </div>
         </div>
 
@@ -168,7 +166,6 @@ const apexOptions = {
           </span>
           <div class="w-full">
             <p class="font-semibold text-teal-600">DISK</p>
-            <p class="text-sm font-medium">12.04.2022 - 12.05.2022</p>
           </div>
         </div>
 
@@ -180,7 +177,6 @@ const apexOptions = {
           </span>
           <div class="w-full">
             <p class="font-semibold text-amber-500">NET</p>
-            <p class="text-sm font-medium">12.04.2022 - 12.05.2022</p>
           </div>
         </div>
 
