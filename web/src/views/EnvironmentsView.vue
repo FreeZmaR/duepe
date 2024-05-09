@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import {ref} from "vue";
 
-import DefaultLayout from "@/layouts/DefaultLayout.vue"
+import DefaultLayout from '@/layouts/DefaultLayout.vue'
 import EnvironmentListTable from "@/components/Tables/EnvironmentListTable.vue"
 
 const mockEnvironments = ref([

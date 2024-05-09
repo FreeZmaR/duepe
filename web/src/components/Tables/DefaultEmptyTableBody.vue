@@ -9,7 +9,7 @@ const props = defineProps<IProps>()
 
 <template>
   <tr>
-    <template v-for="i in props.columns">
+    <template v-for="i in props.columns" :key="i">
       <td v-if="i === 0" class="py-5 px-4 pl-9 xl:pl-11">
         <p class="text-sm"> - </p>
       </td>

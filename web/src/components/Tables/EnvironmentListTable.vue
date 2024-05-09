@@ -15,7 +15,6 @@ interface IProps {
 }
 
 const props = withDefaults(defineProps<IProps>(), {})
-
 </script>
 
 <template>
