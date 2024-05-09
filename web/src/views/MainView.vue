@@ -2,8 +2,8 @@
 import { ref } from 'vue'
 
 import DefaultLayout from '@/layouts/DefaultLayout.vue'
-import ServiceListTable  from "@/components/Tables/ServiceListTable.vue";
-import MonitoringArea from "@/components/Monitoring/MonitoringArea.vue";
+import ServiceListTable  from '@/components/Tables/ServiceListTable.vue'
+import MonitoringArea from "@/components/Monitoring/MonitoringArea.vue"
 
 
 const mockServices = ref([

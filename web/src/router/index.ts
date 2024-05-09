@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 
 import MainView from '@/views/MainView.vue'
+import EnvironmentsView from '@/views/EnvironmentsView.vue'
 import SettingsView from '@/views/SettingsView.vue'
 import ProfileView from '@/views/ProfileView.vue'
 import { usePageStore } from '@/stores/page'
@@ -26,7 +27,7 @@ const routes = [
   {
     path: '/environments',
     name: 'environments',
-    component: MainView,
+    component: EnvironmentsView,
     meta: {
       title: 'Environments'
     }

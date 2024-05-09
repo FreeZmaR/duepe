@@ -1,32 +1,21 @@
 <script setup lang="ts">
 import DefaultEmptyTableBody from '@/components/Tables/DefaultEmptyTableBody.vue'
 
-
-interface IItemAction {
-  setting: boolean
-  run: boolean
-  stop: boolean
-  delete: boolean
-}
-
 interface IItem {
   id: number
   name: string
-  type: string
-  status: boolean
-  workTime?: string
-  actions?: IItemAction
+  user?: string
+  runningServices?: number
+  totalServices?: number
 }
 
 interface IProps {
   title?: string
-  onlyActive?: boolean
-  showAddButton?: boolean
   items?: IItem[]
 }
 
+const props = withDefaults(defineProps<IProps>(), {})
 
-const props = withDefaults(defineProps<IProps>(), {onlyActive: false})
 
 </script>
 
@@ -36,12 +25,12 @@ const props = withDefaults(defineProps<IProps>(), {onlyActive: false})
   >
     <div class="flex flex-row items-center justify-between mb-4 py-4 px-4 2xl:px-11">
       <div>
-        <h4 v-show="props.title" class="text-xl font-semibold text-black dark:text-white" >{{ props.title }}</h4>
+        <h4 class="text-xl font-semibold text-black dark:text-white" >{{ props.title }}</h4>
       </div>
-      <div v-show="props.showAddButton">
+      <div>
         <input
             type="button"
-            value="New Service"
+            value="New Environment"
             class="w-full cursor-pointer rounded-lg border border-primary bg-primary p-2 font-medium text-white transition hover:bg-opacity-90"
         />
       </div>
@@ -53,9 +42,9 @@ const props = withDefaults(defineProps<IProps>(), {onlyActive: false})
         <tr class="bg-gray-2 text-left dark:bg-meta-4">
           <th class="min-w-[220px] py-4 px-4 font-medium text-black dark:text-white xl:pl-11">Name</th>
           <th class="min-w-[150px] py-4 px-4 font-medium text-black dark:text-white">ID</th>
-          <th class="min-w-[120px] py-4 px-4 font-medium text-black dark:text-white">Type</th>
-          <th v-if="!onlyActive" class="min-w-[120px] py-4 px-4 font-medium text-black dark:text-white">Status</th>
-          <th class="py-4 px-4 font-medium text-black dark:text-white">Actions</th>
+          <th class="min-w-[120px] py-4 px-4 font-medium text-black dark:text-white">Running Services</th>
+          <th class="min-w-[120px] py-4 px-4 font-medium text-black dark:text-white">Total Services</th>
+          <th class="py-4 px-4 font-medium text-black dark:text-white">Action</th>
         </tr>
         </thead>
         <tbody>
@@ -67,22 +56,14 @@ const props = withDefaults(defineProps<IProps>(), {onlyActive: false})
             <p class="text-sm">{{ item.id }}</p>
           </td>
           <td class="py-5 px-4">
-            <p class="text-sm">{{ item.type }}</p>
-          </td>
-          <td v-show="!onlyActive" class="py-5 px-4">
-            <p
-                class="inline-flex rounded-full bg-opacity-10 py-1 px-3 text-sm font-medium"
-                :class="{
-                  'bg-danger text-danger': !item.status,
-                  'bg-success text-success': item.status
-                }"
-            >
-              {{ item.status ? 'Active' : 'Inactive'}}
-            </p>
+            <p class="text-sm">{{ item?.runningServices ? item.runningServices : 0 }}</p>
           </td>
           <td class="py-5 px-4">
-            <div v-show="item.actions" class="flex items-center space-x-3.5">
-              <button v-show="item.actions?.setting" class="hover:text-primary">
+            <p class="text-sm">{{ item?.totalServices ? item.totalServices : 0 }}</p>
+          </td>
+          <td class="py-5 px-4">
+            <div class="flex items-center space-x-3.5">
+              <button  class="hover:text-primary">
                 <svg
                     class="fill-current"
                     width="22"
@@ -101,33 +82,15 @@ const props = withDefaults(defineProps<IProps>(), {onlyActive: false})
                   />
                 </svg>
               </button>
-
-              <button v-show="item.actions?.run && !item.status" class="hover:text-success" >
-                <svg xmlns="http://www.w3.org/2000/svg" class="fill-current" width="18"  height="18" viewBox="0 0 18 18">
-                  <polygon points="2,2 16,9 2,16" fill=""/>
-                </svg>
-              </button>
-
-              <button v-show="item.actions?.stop && item.status" class="hover:text-danger">
-                <svg xmlns="http://www.w3.org/2000/svg" class="fill-current" width="18" height="18" viewBox="0 0 18 18">
-                  <rect x="4" y="4" width="10" height="10" fill=""/>
-                </svg>
-              </button>
-
-              <button v-show="item.actions?.delete" class="hover:text-danger">
-                <svg xmlns="http://www.w3.org/2000/svg" class="fill-current" width="18" height="18" viewBox="0 0 18 18">
-                  <path d="M2 2 L16 16 M16 2 L2 16" stroke="currentColor" stroke-width="2"/>
-                </svg>
-              </button>
             </div>
           </td>
         </tr>
 
         <DefaultEmptyTableBody v-show="!props.items" :columns="5"/>
 
-
         </tbody>
       </table>
     </div>
   </div>
+
 </template>
