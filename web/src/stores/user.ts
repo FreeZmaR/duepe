@@ -6,15 +6,21 @@ interface User {
     id: string
     name: string
     role: string
+    token: string
 }
 
+const user = ref<User|null>(null);
 
 export const useUserStore = defineStore("user", () => {
-  const user = useStorage("user", ref<User>({id: "Admin", name: "Admin", role: "Admin"}));
+  const data = useStorage("user", user);
 
   function setUser(newUser: any) {
-    user.value = newUser;
+      data.value = newUser;
   }
 
-  return { user, setUser };
+  function logout() {
+      data.value = null;
+  }
+
+  return { data, setUser, logout };
 });

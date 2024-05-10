@@ -1,7 +1,8 @@
 <script setup lang="ts">
-import {ref} from 'vue'
+import {nextTick, ref} from 'vue'
 import {onClickOutside} from '@vueuse/core'
 import {useUserStore} from "@/stores/user";
+import router from "@/router";
 
 const target = ref(null)
 const dropdownOpen = ref(false)
@@ -10,6 +11,12 @@ const user = useUserStore()
 onClickOutside(target, () => {
   dropdownOpen.value = false
 })
+
+function logout() {
+  user.logout()
+  nextTick(() => router.push('/auth'))
+}
+
 </script>
 
 <template>
@@ -20,8 +27,8 @@ onClickOutside(target, () => {
         @click.prevent="dropdownOpen = !dropdownOpen"
     >
       <span class="hidden text-right lg:block">
-        <span class="block text-sm font-medium text-black dark:text-white">{{ user.user.name }}</span>
-        <span class="block text-xs font-medium">{{ user.user.role }}</span>
+        <span class="block text-sm font-medium text-black dark:text-white">{{ user.data?.name }}</span>
+        <span class="block text-xs font-medium">{{ user.data?.role }}</span>
       </span>
 
       <svg
@@ -100,6 +107,7 @@ onClickOutside(target, () => {
         </li>
       </ul>
       <button
+          @click="logout"
           class="flex items-center gap-3.5 py-4 px-6 text-sm font-medium duration-300 ease-in-out hover:text-primary lg:text-base"
       >
         <svg
