@@ -1,3 +1,14 @@
+<script setup lang="ts">
+import { useSidebarStore } from '@/stores/sidebar'
+import DarkModeSwitcher from './DarkModeSwitcher.vue'
+import DropdownNotification from './DropdownNotification.vue'
+import DropdownUser from './DropdownUser.vue'
+import { usePageStore } from "@/stores/page";
+
+const sideBarStore = useSidebarStore()
+
+</script>
+
 <template>
   <header
     class="sticky top-0 z-999 flex w-full bg-white drop-shadow-1 dark:bg-boxdark dark:drop-shadow-none"
@@ -100,13 +111,3 @@
   </header>
 </template>
 
-<script setup lang="ts">
-import { useSidebarStore } from '@/stores/sidebar'
-import DarkModeSwitcher from './DarkModeSwitcher.vue'
-import DropdownNotification from './DropdownNotification.vue'
-import DropdownUser from './DropdownUser.vue'
-import { usePageStore } from "@/stores/page";
-
-const sideBarStore = useSidebarStore()
-
-</script>
