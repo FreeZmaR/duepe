@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import DefaultEmptyTableBody from '@/components/Tables/DefaultEmptyTableBody.vue'
+import StatusSwitcher from "@/components/Forms/Switchers/StatusSwitcher.vue";
 
 
 interface IItemAction {
@@ -36,7 +37,7 @@ const props = withDefaults(defineProps<IProps>(), {onlyActive: false})
   >
     <div class="flex flex-row items-center justify-between mb-4 py-4 px-4 2xl:px-11">
       <div>
-        <h4 v-show="props.title" class="text-xl font-semibold text-black dark:text-white" >{{ props.title }}</h4>
+        <h4 v-show="props.title" class="text-xl font-semibold text-black dark:text-white">{{ props.title }}</h4>
       </div>
       <div v-show="props.showAddButton">
         <input
@@ -54,7 +55,7 @@ const props = withDefaults(defineProps<IProps>(), {onlyActive: false})
           <th class="min-w-[220px] py-4 px-4 font-medium text-black dark:text-white xl:pl-11">Name</th>
           <th class="min-w-[150px] py-4 px-4 font-medium text-black dark:text-white">ID</th>
           <th class="min-w-[120px] py-4 px-4 font-medium text-black dark:text-white">Type</th>
-          <th v-if="!onlyActive" class="min-w-[120px] py-4 px-4 font-medium text-black dark:text-white">Status</th>
+          <th class="min-w-[120px] py-4 px-4 font-medium text-black dark:text-white">Status</th>
           <th class="py-4 px-4 font-medium text-black dark:text-white">Actions</th>
         </tr>
         </thead>
@@ -69,19 +70,11 @@ const props = withDefaults(defineProps<IProps>(), {onlyActive: false})
           <td class="py-5 px-4">
             <p class="text-sm">{{ item.type }}</p>
           </td>
-          <td v-show="!onlyActive" class="py-5 px-4">
-            <p
-                class="inline-flex rounded-full bg-opacity-10 py-1 px-3 text-sm font-medium"
-                :class="{
-                  'bg-danger text-danger': !item.status,
-                  'bg-success text-success': item.status
-                }"
-            >
-              {{ item.status ? 'Active' : 'Inactive'}}
-            </p>
-          </td>
           <td class="py-5 px-4">
-            <div v-show="item.actions" class="flex items-center space-x-3.5">
+            <StatusSwitcher :id="'service-status-'+item.id" :status="item.status"/>
+          </td>
+          <td class="py-5 px-4 text-center">
+            <div v-show="item.actions" class="flex items-center justify-center space-x-3.5">
               <button v-show="item.actions?.setting" class="hover:text-primary">
                 <svg
                     class="fill-current"
@@ -99,24 +92,6 @@ const props = withDefaults(defineProps<IProps>(), {onlyActive: false})
                       d="M11 6.32498C8.42189 6.32498 6.32501 8.42186 6.32501 11C6.32501 13.5781 8.42189 15.675 11 15.675C13.5781 15.675 15.675 13.5781 15.675 11C15.675 8.42186 13.5781 6.32498 11 6.32498ZM11 14.1281C9.28126 14.1281 7.87189 12.7187 7.87189 11C7.87189 9.28123 9.28126 7.87186 11 7.87186C12.7188 7.87186 14.1281 9.28123 14.1281 11C14.1281 12.7187 12.7188 14.1281 11 14.1281Z"
                       fill=""
                   />
-                </svg>
-              </button>
-
-              <button v-show="item.actions?.run && !item.status" class="hover:text-success" >
-                <svg xmlns="http://www.w3.org/2000/svg" class="fill-current" width="18"  height="18" viewBox="0 0 18 18">
-                  <polygon points="2,2 16,9 2,16" fill=""/>
-                </svg>
-              </button>
-
-              <button v-show="item.actions?.stop && item.status" class="hover:text-danger">
-                <svg xmlns="http://www.w3.org/2000/svg" class="fill-current" width="18" height="18" viewBox="0 0 18 18">
-                  <rect x="4" y="4" width="10" height="10" fill=""/>
-                </svg>
-              </button>
-
-              <button v-show="item.actions?.delete" class="hover:text-danger">
-                <svg xmlns="http://www.w3.org/2000/svg" class="fill-current" width="18" height="18" viewBox="0 0 18 18">
-                  <path d="M2 2 L16 16 M16 2 L2 16" stroke="currentColor" stroke-width="2"/>
                 </svg>
               </button>
             </div>

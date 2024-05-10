@@ -5,6 +5,7 @@ import EnvironmentsView from '@/views/EnvironmentsView.vue'
 import SettingsView from '@/views/SettingsView.vue'
 import ProfileView from '@/views/ProfileView.vue'
 import { usePageStore } from '@/stores/page'
+import ServicesView from '@/views/ServicesView.vue';
 
 
 const routes = [
@@ -19,7 +20,7 @@ const routes = [
   {
     path: '/services',
     name: 'services',
-    component: MainView,
+    component: ServicesView,
     meta: {
       title: 'Services'
     }
