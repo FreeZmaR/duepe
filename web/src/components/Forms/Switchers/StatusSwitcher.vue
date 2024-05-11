@@ -8,7 +8,7 @@ interface IProps{
 
 const props = defineProps<IProps>()
 
-const switcherToggle = ref<boolean>(false)
+const switcherToggle = ref<boolean>(props.status)
 </script>
 
 <template>
