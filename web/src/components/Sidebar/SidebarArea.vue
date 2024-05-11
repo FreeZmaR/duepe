@@ -123,7 +123,7 @@ fill=""
     <!-- SIDEBAR HEADER -->
     <div class="flex items-center justify-between gap-2 px-6 py-5.5 lg:py-6.5">
       <router-link to="/">
-        <img src="@/assets/images/logo/logo.svg" alt="Logo" />
+        <h1 class="self-center text-xl font-semibold whitespace-nowrap dark:text-white">Duepe</h1>
       </router-link>
 
       <button class="block lg:hidden" @click="sidebarStore.isSidebarOpen = false">

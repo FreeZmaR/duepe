@@ -9,10 +9,21 @@ interface User {
     token: string
 }
 
-const user = ref<User|null>(null);
+const user = ref(null);
+
 
 export const useUserStore = defineStore("user", () => {
-  const data = useStorage("user", user);
+  const data = useStorage(
+      "user",
+      user,
+      localStorage,
+      {
+          serializer: {
+              read: (v: any) => v ? JSON.parse(v) : null,
+              write: (v: any) => JSON.stringify(v),
+          },
+      },
+  );
 
   function setUser(newUser: any) {
       data.value = newUser;
