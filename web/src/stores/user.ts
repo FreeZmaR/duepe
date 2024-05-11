@@ -10,7 +10,10 @@ interface User {
 }
 
 const user = ref(null);
-
+const userRoles = {
+    admin: "admin",
+    user: "user",
+}
 
 export const useUserStore = defineStore("user", () => {
   const data = useStorage(
@@ -33,5 +36,9 @@ export const useUserStore = defineStore("user", () => {
       data.value = null;
   }
 
-  return { data, setUser, logout };
+  function isAdmin(): boolean {
+      return data.value.role === userRoles.admin;
+  }
+
+  return { data, setUser, logout, isAdmin };
 });

@@ -2,7 +2,6 @@
 import DefaultEmptyTableBody from '@/components/Tables/DefaultEmptyTableBody.vue'
 import StatusSwitcher from "@/components/Forms/Switchers/StatusSwitcher.vue";
 
-
 interface IItemAction {
   setting: boolean
   run: boolean
