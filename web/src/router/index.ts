@@ -7,7 +7,7 @@ import ProfileView from '@/views/ProfileView.vue'
 import {usePageStore} from '@/stores/page'
 import ServicesView from '@/views/ServicesView.vue';
 import AuthView from "@/views/AuthView.vue";
-import {useUserStore} from "@/stores/user";
+import {useUserStore } from "@/stores/user";
 
 
 const routes = [
@@ -78,17 +78,22 @@ router.beforeEach((to, from, next) => {
         return
     }
 
+    if (!user.isAdmin() && to.name === 'settings') {
+        next({name: 'main'})
 
-    document.title = `Duepe Panel | ${to.meta.title}`
-
-    if (typeof to.meta.title === 'string') {
-        usePageStore().setTitle(to.meta.title)
+        return
     }
 
     if (to.name === 'auth' && user.data) {
         next({name: 'main'})
 
         return
+    }
+
+    document.title = `Duepe Panel | ${to.meta.title}`
+
+    if (typeof to.meta.title === 'string') {
+        usePageStore().setTitle(to.meta.title)
     }
 
 

@@ -3,16 +3,38 @@ import { useSidebarStore } from '@/stores/sidebar'
 import { onClickOutside } from '@vueuse/core'
 import { ref } from 'vue'
 import SidebarItem from './SidebarItem.vue'
+import {useUserStore} from "@/stores/user";
+
+interface MenuItem {
+  icon: string
+  label: string
+  route: string
+  requiresAuth?: boolean
+}
+
+interface MenuGroup {
+  name: string
+  menuItems: MenuItem[]
+}
 
 const target = ref(null)
 
 const sidebarStore = useSidebarStore()
+const user = useUserStore()
 
 onClickOutside(target, () => {
   sidebarStore.isSidebarOpen = false
 })
 
-const menuGroups = ref([
+function canShow(item: MenuItem) {
+  if (user.isAdmin()) {
+    return true
+  }
+
+  return item.label !== 'Settings';
+}
+
+const menuGroups = ref<MenuGroup[]|null>([
   {
     name: 'MENU',
     menuItems: [
@@ -152,12 +174,13 @@ fill=""
             <h3 class="mb-4 ml-4 text-sm font-medium text-bodydark2">{{ menuGroup.name }}</h3>
 
             <ul class="mb-6 flex flex-col gap-1.5">
-              <SidebarItem
-                v-for="(menuItem, index) in menuGroup.menuItems"
-                :item="menuItem"
-                :key="index"
-                :index="index"
-              />
+              <template v-for="(menuItem, index) in menuGroup.menuItems" :key="index">
+                <SidebarItem
+                  v-show="canShow(menuItem)"
+                  :item="menuItem"
+                  :index="index"
+                />
+              </template>
             </ul>
           </div>
         </template>

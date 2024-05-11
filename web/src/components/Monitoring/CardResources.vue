@@ -1,43 +1,68 @@
 <script setup lang="ts">
 import {ref} from 'vue'
+import {useUserStore} from "@/stores/user";
 
-const cardItems = ref([
+interface IItem {
+  title: string
+  total: string
+  growthRate: string
+  isGrowth: boolean
+  metaNumber: string
+  forAdmin: boolean
+}
+
+const cardItems = ref<IItem[]>([
   {
     title: 'CPU usage',
     total: '25.17%',
     growthRate: "0.43%",
     isGrowth: true,
-    metaNumber: "5"
+    metaNumber: "5",
+    forAdmin: false,
   },
   {
     title: 'RAM usage',
     total: '3.4GB',
     growthRate: "4.35%",
     isGrowth: true,
-    metaNumber: "5"
+    metaNumber: "5",
+    forAdmin: false,
   },
   {
     title: 'Disk usage',
     total: '1GB',
     growthRate: "2.59%",
     isGrowth: true,
-    metaNumber: "5"
+    metaNumber: "5",
+    forAdmin: false,
   },
   {
     title: 'Total Environments',
     total: '4',
     growthRate: "-1",
     isGrowth: false,
-    metaNumber: ""
+    metaNumber: "",
+    forAdmin: true,
   },
   {
     title: 'Total Active Services',
     total: '36',
     growthRate: "-2",
     isGrowth: false,
-    metaNumber: ""
+    metaNumber: "",
+    forAdmin: true,
   }
 ])
+
+const user = useUserStore()
+
+function canShow(item: IItem): boolean {
+  if (user.isAdmin()) {
+    return true
+  }
+
+  return !item.forAdmin
+}
 
 function getColorClassForItem(prefix: string, metaNumber: string): string {
   if (metaNumber === "") {
@@ -57,7 +82,7 @@ function getColorClassForItem(prefix: string, metaNumber: string): string {
       class="rounded-sm border border-stroke bg-white py-6 px-7.5 shadow-default dark:border-strokedark dark:bg-boxdark"
   >
 
-    <div class="mt-3 flex items-center justify-between">
+    <div v-show="canShow(item)" class="mt-3 flex items-center justify-between">
       <div>
         <span class="text-sm font-medium">{{ item.title }}</span>
       </div>
