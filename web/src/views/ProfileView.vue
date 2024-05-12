@@ -7,6 +7,7 @@ import {useUserStore} from "@/stores/user";
 
 const formData = ref({
   name: '',
+  oldName: '',
   newPassword: '',
   repeatNewPassword: '',
 })
@@ -14,11 +15,15 @@ const formData = ref({
 const user = useUserStore()
 
 formData.value.name = user.data.name
+formData.value.oldName = user.data.name
 
 const handleSubmit = () => {
 }
 
 const handleCancel = () => {
+  formData.value.name = formData.value.oldName
+  formData.value.newPassword = ''
+  formData.value.repeatNewPassword = ''
 }
 
 </script>
