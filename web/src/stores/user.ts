@@ -37,7 +37,7 @@ export const useUserStore = defineStore("user", () => {
   }
 
   function isAdmin(): boolean {
-      return data.value.role === userRoles.admin;
+      return data.value?.role === userRoles.admin;
   }
 
   return { data, setUser, logout, isAdmin };
