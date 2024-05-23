@@ -1,6 +1,7 @@
 import { ref } from "vue";
 import { defineStore } from "pinia";
 import { useStorage } from "@vueuse/core";
+import axios from 'axios';
 
 interface User {
     id: string
@@ -9,10 +10,30 @@ interface User {
     token: string
 }
 
-const user = ref(null);
+const user = ref<User|null>(null);
 const userRoles = {
     admin: "admin",
     user: "user",
+}
+
+function getSessionToken(): string | null {
+    const meta = document.querySelector('meta[name="session"]');
+    return meta ? meta.getAttribute('content') : null;
+}
+
+async function fetchUserData() {
+    const token = getSessionToken();
+    if (!token) {
+       return null;
+    }
+
+    const response = await axios.get('/api/user-data', {
+        headers: {
+            'Session-Token': token,
+        },
+    });
+
+    return response.data;
 }
 
 export const useUserStore = defineStore("user", () => {
@@ -28,6 +49,16 @@ export const useUserStore = defineStore("user", () => {
       },
   );
 
+    async function loadUserData() {
+        try {
+            const userData = await fetchUserData();
+            setUser(userData);
+        } catch (error) {
+            console.error('Failed to load user data:', error);
+        }
+    }
+
+
   function setUser(newUser: any) {
       data.value = newUser;
   }
@@ -40,5 +71,5 @@ export const useUserStore = defineStore("user", () => {
       return data.value?.role === userRoles.admin;
   }
 
-  return { data, setUser, logout, isAdmin };
+  return { data, setUser, logout, isAdmin, loadUserData };
 });

@@ -21,7 +21,9 @@ func provideInstanceRouter() *http.ServeMux {
 }
 
 func provideIndexRoutes(router *http.ServeMux) {
-	router.HandleFunc("/", handlers.Index)
+	sessionMW := middlewares.NewSession()
+
+	router.Handle("/", sessionMW.Apply(handlers.Index()))
 }
 
 func provideAssetsRoutes(router *http.ServeMux) {
