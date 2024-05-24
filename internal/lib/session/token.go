@@ -3,15 +3,23 @@ package session
 import (
 	"encoding/base64"
 	"encoding/binary"
+	"errors"
+)
+
+var (
+	ErrorInvalidToken = errors.New("invalid token")
 )
 
 func parseToken(token string) (int64, error) {
 	b, err := base64.RawStdEncoding.DecodeString(token)
 	if err != nil {
-		return 0, err
+		return 0, ErrorInvalidToken
 	}
 
 	num, _ := binary.Varint(b)
+	if num <= 0 {
+		return 0, ErrorInvalidToken
+	}
 
 	return num, nil
 }

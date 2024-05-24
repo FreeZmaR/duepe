@@ -67,7 +67,10 @@ func (s *Manager) NewSession(_ context.Context, user *models.User) (*Session, er
 
 	newUser := *user
 
-	return newSession(id, &newUser, token, s.deleteSession), nil
+	session := newSession(id, &newUser, token, s.deleteSession)
+	s.container.Store(id, session)
+
+	return session, nil
 }
 
 func (s *Manager) SaveSessionToContext(ctx context.Context, session *Session) context.Context {
